@@ -21,7 +21,9 @@ namespace BdT_Manca
         {
             LoadData();
             UpdateUI();
-            
+            CalcDebito();
+            CalcPrestazioni();
+            CalcSegreteria();
         }
 
         private void LoadData()
@@ -60,7 +62,7 @@ namespace BdT_Manca
             }
         }
 
-        private void btnDebito_Click(object sender, EventArgs e)
+        public void CalcDebito()
         {
             // Logica per produrre l'elenco dei soci con debito
             List<Socio> debitori = soci.Where(s => s.CalcolaDebito() > 0 ).ToList();
@@ -72,7 +74,7 @@ namespace BdT_Manca
             }
         }
 
-        private void btnSegreteria_Click(object sender, EventArgs e)
+        public void CalcSegreteria()
         {
             // Logica per visualizzare i soci della segreteria
             List<Socio> segreteriaSoci = soci.Where(s => s.Segreteria).ToList();
@@ -84,7 +86,7 @@ namespace BdT_Manca
             }
         }
 
-        private void btnOrdinaPrestazioni_Click(object sender, EventArgs e)
+        public void CalcPrestazioni()
         {
             // Logica per ordinare e visualizzare le prestazioni
             List<Prestazione> prestazioniOrdinate = prestazioni.OrderByDescending(p => p.Ore).ToList();
@@ -100,27 +102,14 @@ namespace BdT_Manca
         {
             LoadData();
             UpdateUI();
+            CalcDebito();
+            CalcPrestazioni();
+            CalcSegreteria();
         }
-
-        // Metodo per calcolare il devito di tutti i soci
-        /*/public void CalcolaDebito()
-        {
-            foreach (Prestazione prestazione in prestazioni)
-            {
-                prestazione.Erogatore.Debito -= prestazione.Ore;
-                MessageBox.Show(prestazione.Erogatore.ToString());
-                prestazione.Ricevente.Debito += prestazione.Ore;
-                MessageBox.Show(prestazione.Ricevente.ToString());
-            }
-            foreach (Socio p in soci)
-            {
-                MessageBox.Show(p.ToString());
-            }
-        }/*/
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //SaveData();
+            SaveData();
         }
     }
 }
