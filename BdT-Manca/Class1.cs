@@ -13,6 +13,7 @@ namespace BdT_Manca
         public string _nome;
         public double _telefono;
         public int _debito;
+        public string _zona;
         public bool _segreteria; // Indica se il socio fa parte della segreteria
 
         [JsonProperty]
@@ -73,6 +74,21 @@ namespace BdT_Manca
             }
         }
         [JsonProperty]
+        public string Zona
+        {
+            get
+            {
+                return _zona;
+            }
+            private set
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                    _zona = value;
+                else
+                    throw new Exception("Zona non valida");
+            }
+        }
+        [JsonProperty]
         public bool Segreteria
         {
             get
@@ -91,12 +107,13 @@ namespace BdT_Manca
         [JsonProperty]
         public List<Prestazione> Prestazioni { get; set; } // Elenco delle prestazioni offerte o ricevute dal socio
 
-        public Socio(string cognome, string nome, double telefono,int debito, bool segreteria)
+        public Socio(string cognome, string nome, double telefono,int debito,string zona, bool segreteria)
         {
             Cognome = cognome;
             Nome = nome;
             Telefono = telefono;
             Debito = debito;
+            Zona = zona;
             Segreteria = segreteria;
             Prestazioni = new List<Prestazione>();
         }
@@ -137,7 +154,7 @@ namespace BdT_Manca
             return this.Debito;
         }
 
-        protected Socio(Socio other) : this(other.Cognome,other.Nome,other.Telefono,other.Debito,other.Segreteria)
+        protected Socio(Socio other) : this(other.Cognome,other.Nome,other.Telefono,other.Debito,other.Zona,other.Segreteria)
         {
 
         }
@@ -156,7 +173,7 @@ namespace BdT_Manca
 
         public override string ToString()
         {
-            return $"Socio: {Cognome} {Nome}; {Telefono}, {Debito}";
+            return $"Socio: {this.Cognome} {this.Nome}; {this.Telefono}, {this.Debito}, {this.Zona}";
         }
     }
 }
